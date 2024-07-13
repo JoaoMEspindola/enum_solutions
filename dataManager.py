@@ -16,28 +16,28 @@ def buildProblem(content):
 
     termosIndependentes = np.array(list(map(int, lines[2 + nmRestricoes].split())))
 
-    return findCombinations(nmRestricoes, coeficientesFuncaoObjetivo, coeficientesVariaveis, termosIndependentes)
+    return findCombinations(qntdVariaveis, nmRestricoes, coeficientesFuncaoObjetivo, coeficientesVariaveis, termosIndependentes)
 
-def findCombinations(nmRestricoes, coeficientesFuncaoObjetivo, coeficientesVariaveis, termosIndependentes):
+def findCombinations(qntdVariaveis, nmRestricoes, coeficientesFuncaoObjetivo, coeficientesVariaveis, termosIndependentes):
     combinacoes = list(itertools.combinations(range(coeficientesVariaveis.shape[1]), nmRestricoes))
     listaDeVariaveis = []
 
     for combinacao in combinacoes:
-        variaveisDecisao = solveCombination(combinacao, coeficientesVariaveis, termosIndependentes, coeficientesFuncaoObjetivo)
+        variaveisDecisao = solveCombination(combinacao, coeficientesVariaveis, termosIndependentes, qntdVariaveis)
         if variaveisDecisao is not None:
             listaDeVariaveis.append(variaveisDecisao)
 
     return buildSolutions(listaDeVariaveis, coeficientesFuncaoObjetivo)
    
-def solveCombination(combinacoes, coeficientesVariaveis, termosIndependentes, coeficientesFuncaoObjetivo):
+def solveCombination(combinacoes, coeficientesVariaveis, termosIndependentes, qntdVariaveis):
     matrizCombinada = [coeficientesVariaveis[:, col] for col in combinacoes]
 
     try:
         variaveisDecisao = np.linalg.solve(np.transpose(matrizCombinada), termosIndependentes)
-        coeficienteFinal = np.zeros(len(coeficientesFuncaoObjetivo))
+        coeficienteFinal = np.zeros(qntdVariaveis)
         for i in range(len(variaveisDecisao)):
             coeficienteFinal[combinacoes[i]] = variaveisDecisao[i]
-        return coeficienteFinal
+        return tuple(coeficienteFinal)
     except np.linalg.LinAlgError:
         return None
     
