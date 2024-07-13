@@ -1,6 +1,7 @@
 import dataManager
 
-content = dataManager.readFullFile('trabalho_1_PO/assets/exemplo1.txt')
+filename = input()
+content = dataManager.readFullFile(f'trabalho_1_PO/assets/{filename}.txt')
 
 listaSolucoes = dataManager.buildProblem(content)
 
