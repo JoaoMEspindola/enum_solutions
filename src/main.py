@@ -1,7 +1,13 @@
 import dataManager
 
-filename = input()
-content = dataManager.readFullFile(f'trabalho_1_PO/assets/{filename}.txt')
+while True:
+    try:
+        filename = input()
+        content = dataManager.readFullFile(f'assets/{filename}.txt')
+        break
+    except FileNotFoundError:
+        print("Arquivo não encontrado. Tente novamente.")
+
 
 listaSolucoes = dataManager.buildProblem(content)
 
