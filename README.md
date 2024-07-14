@@ -5,3 +5,4 @@
 * Abrir o terminal na pasta do repositório;
 * Com o terminal aberto, basta digitar >python src/main.py para a execução do programa;
 * Insira o nome do arquivo que contém as informações desejadas;
+* Um arquivo de entrada deve ser inserido na pasta /assets;
